@@ -28,12 +28,13 @@ int main(int argc, char *argv[])
 	char option = ' ';
 	int n, i = 0;
 	char c;
-	char input[MAXELS] = " ";
+	char input[MAXELS];
 	//If help is selected, call Usage
 	n = strcmp(string1, argv[1]);
 	if(n == 0)
 	{
 		Usage(argv);
+		exit(1);
 	}
 	//If first input parameter is --help, call help
 	//Check to see if 1 input parameter
@@ -41,21 +42,30 @@ int main(int argc, char *argv[])
 	{
 		printf("Missing or wrong number of parameters\n");
 		Usage(argv);
+		exit(1);
 	}
 	//Extract choice
 	option = GetOptions(argv);
-	printf("Type input.  Output will be based on option\nEnter Ctrl-D to stop user input: ");
-	while(i < (MAXELS - 1) && (c = getchar()) != '\n')
-	{
-		input[i] = c;
-		i++;
-	}
-	input[i] = '\0';
-	puts(input);
-	PrintOption(option, &input[MAXELS]);
+		printf("Type input.  Output will be based on option\nEnter Ctrl-D to stop user input: ");
+		while(1)
+		{	
+			input[0] = '\0';
+			i = 0;
+			while(i < (MAXELS - 1) && (c = getchar()) != '\n')
+			{
+				if (c == EOF)
+				{
+					exit(0);
+				}
+				input[i] = c;
+				i++;
+			}
+			input[i] = '\0';
+			PrintOption(option, input);
+		}
 	return 0;
+	
 }
-
 
 /* Function Definitions */
 void Usage(char **info)
@@ -98,7 +108,7 @@ char GetOptions(char *parameter[])
 		if(n == 0)
 		{
 			choice = 'u';
-			printf("Selecting option %c", choice);
+			printf("Selecting option %c\n", choice);
 		}
 		else
 		{
@@ -109,13 +119,12 @@ char GetOptions(char *parameter[])
 	return (choice);
 }
 //format and print string
-void PrintOption(char input, char original[MAXELS])
+  void PrintOption(char input, char original[])
 {
 	int i = 0;
 	switch (input)
 	{
 		case 'p':
-			puts(original);
 			break;
 		case 'l':
 			while(original[i] != '\0')
@@ -132,5 +141,7 @@ void PrintOption(char input, char original[MAXELS])
 			}
 			break;
 	}
+	
+	printf("%s\n", original);
 	return;
 }
