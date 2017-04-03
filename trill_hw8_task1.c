@@ -17,7 +17,7 @@
 /* Function Prototypes */
 #define LEN 30
 char *StringIn(char *myString, char *secondString);
-void Usage();
+void Usage(char **info);
 
 /* Main Program */
 int main(int argc, char *argv[])
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	{
 		if(argc !=3)
 		{
-			Usage();
+			Usage(argv);
 			exit(1);
 
 		}
@@ -65,9 +65,10 @@ char *StringIn(char *myString, char *secondString)
 }
 
 
-void Usage()
+void Usage(char **info)
 {
 	printf("Missing required parameters\n");
+	printf("Usage ./trill_hw8_task1 <str1> <str2>\nProgram checks if str2 is part of str1\n");
 
 }
 
