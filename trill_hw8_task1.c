@@ -27,8 +27,18 @@ int main(int argc, char *argv[])
 	
 	do
 	{
-		if(argc !=3)
+		char *help = "--help";
+		int n;
+		n = strcmp(help, argv[1]);
+		if(n == 0)
 		{
+			printf("Help information\n");
+			Usage(argv);
+			return 0;
+		}
+		if(argc !=  3)
+		{
+			printf("Missing required parameters\n");
 			Usage(argv);
 			exit(1);
 
@@ -67,8 +77,7 @@ char *StringIn(char *myString, char *secondString)
 
 void Usage(char **info)
 {
-	printf("Missing required parameters\n");
 	printf("Usage ./trill_hw8_task1 <str1> <str2>\nProgram checks if str2 is part of str1\n");
-
+	return;
 }
 
